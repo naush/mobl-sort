@@ -39,9 +39,9 @@ function pancakeSort(unsorted : [Num]) : [Num] {
 
   var flipped = [];
   if (maxIndex != unsorted.length) {
-	  var prefix = reverse(substring(unsorted, 0, maxIndex));
-	  unsorted.splice(0, maxIndex + 1);
-	  flipped = reverse(join(prefix, unsorted));
+  var prefix = reverse(substring(unsorted, 0, maxIndex));
+  unsorted.splice(0, maxIndex + 1);
+  flipped = reverse(join(prefix, unsorted));
   }
   
   flipped.splice(flipped.length, 1);

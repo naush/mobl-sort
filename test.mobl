@@ -27,43 +27,43 @@ function checkSorted(sorted : [Num]) : Bool {
 
 function testCases(sortMethod : Function1<[Num], [Num]>) : [?] {
   return [
-	  testCase("sort one element", {
-	    var expected = [1];
-	    var actual = sortMethod([1]);
-	    assertEqual(expected, actual, arrayMatcher);
-	  }),
-	  testCase("sort two elements", {
+    testCase("sort one element", {
+      var expected = [1];
+      var actual = sortMethod([1]);
+      assertEqual(expected, actual, arrayMatcher);
+    }),
+    testCase("sort two elements", {
       var expected = [1, 2];
       var actual = sortMethod([2, 1]);
       assertEqual(expected, actual, arrayMatcher);
-	  }),
-	  testCase("sort three elements", {
+    }),
+    testCase("sort three elements", {
       var expected = [1, 2, 3];
       var actual = sortMethod([2, 1, 3]);
       assertEqual(expected, actual, arrayMatcher);
-	  }),
-	  testCase("sort two repeated elements", {
+    }),
+    testCase("sort two repeated elements", {
       var expected = [1, 1];
       var actual = sortMethod([1, 1]);
       assertEqual(expected, actual, arrayMatcher);
-	  }),
-	  testCase("sort two repeated and one unique elements", {
+    }),
+    testCase("sort two repeated and one unique elements", {
       var expected = [1, 1, 2];
       var actual = sortMethod([1, 2, 1]);
       assertEqual(expected, actual, arrayMatcher);
-	  }),
-	  testCase("sort nine elements", {
+    }),
+    testCase("sort nine elements", {
       var expected = [1, 1, 2, 3, 4, 5, 5, 6, 9];
       var actual = sortMethod([3, 1, 4, 1, 5, 9, 2, 6, 5]);
       assertEqual(expected, actual, arrayMatcher);
-	  }),
-	  testCase("sort one thousand elements", {
-			var thousand = [];
-			foreach (index in range(0, 1000)) {
-			  thousand.push(random(9));
-			}
-	    assert(checkSorted(sortMethod(thousand)));
-	  })
+    }),
+    testCase("sort one thousand elements", {
+      var thousand = [];
+      foreach (index in range(0, 1000)) {
+        thousand.push(random(9));
+      }
+      assert(checkSorted(sortMethod(thousand)));
+    })
   ];
 }
 
@@ -73,11 +73,11 @@ testSuite("Merge Sort", testCases(mergeSort));
 testSuite("Pancake Sort", testCases(pancakeSort));
 
 testSuite("Bubble Sort", [
-	testCase("swap three elements", {
-		var expected = [1, 2, 3];
-		var actual = swap([3, 2, 1], 0, 2);
-		assertEqual(expected, actual, arrayMatcher);
-	}),
+  testCase("swap three elements", {
+    var expected = [1, 2, 3];
+    var actual = swap([3, 2, 1], 0, 2);
+    assertEqual(expected, actual, arrayMatcher);
+  }),
   testCase("swap two elements", {
     var expected = [1, 2];
     var actual = swap([2, 1], 0, 1);
