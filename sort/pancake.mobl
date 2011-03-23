@@ -1,0 +1,52 @@
+module sort::pancake
+
+function substring(arry : [Num], begin : Num, end : Num) : [Num] {
+  var substr = [];
+  foreach (index in range(begin, end)) {
+    substr.push(arry.get(index));
+  }
+  return substr;
+}
+
+function reverse(arry : [Num]) : [Num] {
+  var reversed = [];
+  foreach (index in range(0, arry.length)) {
+    reversed.insert(0, arry.get(index));
+  }
+  return reversed;
+}
+
+function join(front : [Num], back : [Num]) : [Num] {
+  foreach (index in range(0, back.length)) {
+    front.push(back.get(index));
+  }
+  return front;
+}
+
+function pancakeSort(unsorted : [Num]) : [Num] {
+  if (unsorted.length < 2) {
+    return unsorted;
+  }
+
+  var maximum = unsorted.get(0);
+  var maxIndex = 0;
+  foreach (index in range(0, unsorted.length)) {
+    if (unsorted.get(index) > maximum) {
+      maximum = unsorted.get(index);
+      maxIndex = index;
+    }
+  }
+
+  var flipped = [];
+  if (maxIndex != unsorted.length) {
+	  var prefix = reverse(substring(unsorted, 0, maxIndex));
+	  unsorted.splice(0, maxIndex + 1);
+	  flipped = reverse(join(prefix, unsorted));
+  }
+  
+  flipped.splice(flipped.length, 1);
+  var sorted = pancakeSort(flipped);
+  sorted.push(maximum);
+
+  return sorted;
+}

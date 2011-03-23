@@ -1,0 +1,35 @@
+module sort::quick
+
+function quickSort(unsorted : [Num]) : [Num] {
+  if (unsorted.length < 2) {
+    return unsorted;
+  }
+
+  var pivot = unsorted[0];
+  unsorted.splice(0, 1);
+  var greater = [];
+  var less = [];
+
+  foreach (item in unsorted) {
+    if (item > pivot) {
+      greater.push(item);
+    } else {
+      less.push(item);
+    }
+  }
+
+  var sorted = [];
+
+  foreach (item in quickSort(less)) {
+    sorted.push(item);
+  }
+
+  sorted.push(pivot);
+
+  foreach (item in quickSort(greater)) {
+    sorted.push(item);
+  }
+
+  return sorted;
+}
+

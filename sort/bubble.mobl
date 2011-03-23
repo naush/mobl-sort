@@ -1,0 +1,22 @@
+module sort::bubble
+
+function swap(arry : [Num], first : Num, second : Num) : [Num] {
+  var temp = arry.get(first);
+  arry.splice(first, 1);
+  arry.insert(first, arry.get(second - 1));
+  arry.splice(second, 1);
+  arry.insert(second, temp);
+  return arry;
+}
+
+function bubbleSort(unsorted : [Num]) : [Num] {
+  foreach (i in range(0, unsorted.length - 1)) {
+    foreach (j in range(0, unsorted.length - i - 1)) {
+      var temp = 0;
+      if (unsorted.get(j) > unsorted.get(j + 1)) {
+        swap(unsorted, j, j + 1);
+      }
+    }
+  }
+  return unsorted;
+}

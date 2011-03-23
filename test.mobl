@@ -1,0 +1,118 @@
+application test
+
+import ui
+import mobl::test
+import sort::bubble
+import sort::merge
+import sort::quick
+import sort::pancake
+
+function arrayMatcher(expected : [Num], actual : [Num]) : Bool {
+  foreach (index in range(0, expected.length)) {
+    if (expected.get(index) != actual.get(index)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function checkSorted(sorted : [Num]) : Bool {
+  foreach (index in range(0, sorted.length - 1)) {
+    if (sorted.get(index) > sorted.get(index + 1)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function testCases(sortMethod : Function1<[Num], [Num]>) : [?] {
+  return [
+	  testCase("sort one element", {
+	    var expected = [1];
+	    var actual = sortMethod([1]);
+	    assertEqual(expected, actual, arrayMatcher);
+	  }),
+	  testCase("sort two elements", {
+      var expected = [1, 2];
+      var actual = sortMethod([2, 1]);
+      assertEqual(expected, actual, arrayMatcher);
+	  }),
+	  testCase("sort three elements", {
+      var expected = [1, 2, 3];
+      var actual = sortMethod([2, 1, 3]);
+      assertEqual(expected, actual, arrayMatcher);
+	  }),
+	  testCase("sort two repeated elements", {
+      var expected = [1, 1];
+      var actual = sortMethod([1, 1]);
+      assertEqual(expected, actual, arrayMatcher);
+	  }),
+	  testCase("sort two repeated and one unique elements", {
+      var expected = [1, 1, 2];
+      var actual = sortMethod([1, 2, 1]);
+      assertEqual(expected, actual, arrayMatcher);
+	  }),
+	  testCase("sort nine elements", {
+      var expected = [1, 1, 2, 3, 4, 5, 5, 6, 9];
+      var actual = sortMethod([3, 1, 4, 1, 5, 9, 2, 6, 5]);
+      assertEqual(expected, actual, arrayMatcher);
+	  }),
+	  testCase("sort one thousand elements", {
+			var thousand = [];
+			foreach (index in range(0, 1000)) {
+			  thousand.push(random(9));
+			}
+	    assert(checkSorted(sortMethod(thousand)));
+	  })
+  ];
+}
+
+testSuite("Bubble Sort", testCases(bubbleSort));
+testSuite("Quick Sort", testCases(quickSort));
+testSuite("Merge Sort", testCases(mergeSort));
+testSuite("Pancake Sort", testCases(pancakeSort));
+
+testSuite("Bubble Sort", [
+	testCase("swap three elements", {
+		var expected = [1, 2, 3];
+		var actual = swap([3, 2, 1], 0, 2);
+		assertEqual(expected, actual, arrayMatcher);
+	}),
+  testCase("swap two elements", {
+    var expected = [1, 2];
+    var actual = swap([2, 1], 0, 1);
+    assertEqual(expected, actual, arrayMatcher);
+  })
+]);
+
+testSuite("Pancake Sort", [
+  testCase("substring", {
+    var expected = [0, 1];
+    var actual = substring([0, 1, 2, 3, 4], 0, 2);
+    assertEqual(expected, actual, arrayMatcher);
+  }),
+  testCase("reverse one element", {
+    var expected = [1];
+    var actual = reverse([1]);
+    assertEqual(expected, actual, arrayMatcher);
+  }),
+  testCase("reverse even elements", {
+    var expected = [1, 2, 3, 4];
+    var actual = reverse([4, 3, 2, 1]);
+    assertEqual(expected, actual, arrayMatcher);
+  }),
+  testCase("reverse odd elements", {
+    var expected = [1, 2, 3, 4, 5];
+    var actual = reverse([5, 4, 3, 2, 1]);
+    assertEqual(expected, actual, arrayMatcher);
+  }),
+  testCase("join", {
+    var expected = [1, 2, 3, 4];
+    var actual = join([1, 2], [3, 4]);
+    assertEqual(expected, actual, arrayMatcher);
+  })
+]);
+
+screen root() {
+  testRunner()
+}

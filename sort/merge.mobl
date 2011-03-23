@@ -1,0 +1,64 @@
+module sort::merge
+
+function min(a : Num, b : Num) : Num {
+  if (a < b) {
+    return a;
+  }
+  return b;
+}
+
+function merge(left : [Num], right : [Num]) : [Num] {
+  var result = [];
+  if (right.get(0) <= left.get(0)) {
+    result.push(right.get(0));
+    right.splice(0, 1);
+  } else {
+    result.push(left.get(0));
+    left.splice(0, 1);
+  }
+  if (left.length > 0 || right.length > 0) {
+    if (left.length == 0) {
+      foreach (index in range(0, right.length)) {
+        result.push(right.get(index));
+      }
+    }
+    if (right.length == 0) {
+      foreach (index in range(0, left.length)) {
+        result.push(left.get(index));
+      }
+    }
+    if (left.length > 0 && right.length > 0) {
+      var ret = merge(left, right);
+      foreach (index in range(0, ret.length)) {
+        result.push(ret.get(index));
+      }
+    }
+  }
+  return result;
+}
+
+function mergeSort(unsorted : [Num]) : [Num] {
+  if (unsorted.length < 2) {
+    return unsorted;
+  }
+  
+  var left = [];
+  var right = [];
+  var result = [];
+  
+  var middle = Math.round(unsorted.length/2);
+  
+  foreach (index in range(0, middle)) {
+    left.push(unsorted.get(index));
+  }
+  
+  foreach (index in range(middle, unsorted.length)) {
+    right.push(unsorted.get(index));
+  }
+  
+  left = mergeSort(left);
+  right = mergeSort(right);
+  result = merge(left, right);
+
+  return result;
+}
